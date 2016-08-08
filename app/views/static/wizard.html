@@ -5,7 +5,7 @@
         <a ng-click="stepClick(step)">{{step.title}}</a>
       </li>
     </ul>
-    <div ng-if="!wizardReady" class="wizard-miq-step-content" ng-style="contentStyle">
+    <div ng-if="!wizardReady || !stepsLoaded" class="wizard-miq-step-content" ng-style="contentStyle">
       <div class="blank-slate-pf">
         <div class="spinner spinner-lg"></div>
         <h1>Initialization in progress...</h1>
@@ -16,13 +16,13 @@
   <div class="wizard-miq-btn-container modal-footer">
     <button miq-wiz-cancel class="btn btn-default" ng-disabled="wizardDone">{{cancelTitle}}</button>
     <div class="tooltip-wrapper" tooltip="{{prevTooltip}}" tooltip-placement="left">
-      <button miq-wiz-previous class="btn btn-default" ng-disabled="!wizardReady || wizardDone || !prevEnabled || firstStep"
+      <button miq-wiz-previous class="btn btn-default" ng-disabled="!wizardReady || !stepsLoaded || wizardDone || !prevEnabled || firstStep"
               callback="backCallback">
         {{backTitle}}
       </button>
     </div>
     <div class="tooltip-wrapper" tooltip="{{nextTooltip}}" tooltip-placement="left">
-      <button miq-wiz-next class="btn btn-primary" ng-disabled="!wizardReady || !nextEnabled"
+      <button miq-wiz-next class="btn btn-primary" ng-disabled="!wizardReady || !stepsLoaded || !nextEnabled"
               callback="nextCallback">
         {{nextTitle}}
       </button>

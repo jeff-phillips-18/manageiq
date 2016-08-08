@@ -34,11 +34,9 @@ miqHttpInject(angular.module('miq.containers.providersModule', ['ui.bootstrap', 
         }
       };
 
-      $timeout(function() {
-        $scope.data.existingProviders = $scope.deploymentData.providers;
-        $scope.data.newVmProviders = $scope.deploymentData.provision;
-        $scope.deployProviderReady = true;
-      }, 5000);
+      $scope.data.existingProviders = $scope.deploymentData.providers;
+      $scope.data.newVmProviders = $scope.deploymentData.provision;
+      $scope.deployProviderReady = true;
 
       $scope.deploymentDetailsGeneralComplete = false;
       $scope.deployComplete = false;
@@ -173,13 +171,6 @@ miqHttpInject(angular.module('miq.containers.providersModule', ['ui.bootstrap', 
     };
 
     $scope.ready = false;
-    var url = '/api/container_deployments/container_deployment_data';
-    API.get(url).then(function (response) {
-      'use strict';
-      $scope.deploymentData = response.data;
-      initializeDeploymentWizard();
-      $scope.ready = true;
-    });
 
     $scope.data = {};
     $scope.deployComplete = false;
@@ -229,7 +220,13 @@ miqHttpInject(angular.module('miq.containers.providersModule', ['ui.bootstrap', 
     $scope.showDeploymentWizard = false;
     $scope.showListener = function() {
       if (!$scope.showDeploymentWizard) {
-        initializeDeploymentWizard();
+        var url = '/api/container_deployments/container_deployment_data';
+        API.get(url).then(function (response) {
+          'use strict';
+          $scope.deploymentData = response.data;
+          initializeDeploymentWizard();
+          $scope.ready = true;
+        });
         $scope.showDeploymentWizard = true;
       }
     };
